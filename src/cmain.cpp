@@ -1,40 +1,47 @@
-#include "Client.hpp"
-
-#include <unistd.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
 #include <string.h>
 
-enum Pipe
-{
-    READ = 0,
-    WRITE,
-    SUCCESS = 0
-};
+constexpr const char *MEMORY_NAME = "/shared";
+constexpr int SIZE = 1024;
 
 int main(int argc, char const *argv[])
 {
-    int _pipe[2];
-    char buffer[10];
-    char *str = "1,2,3,4,5~6,7,8,9,10";
+    const char *message = "Hello world!";
 
-    if (pipe(_pipe) != Pipe::SUCCESS)
+    printf("Create shared memory.\n");
+    int fd = shm_open(MEMORY_NAME, O_RDWR, 0660);
+    if (fd < 0)
     {
-        printf("Error in pipe()\n");
+        fprintf(stderr, "Unable to open shared memory, trying to create one.\n");
+        fd = shm_open(MEMORY_NAME, O_RDWR | O_CREAT, 0660);
+        if (fd < 0)
+        {
+            fprintf(stderr, "Unable to create shared memory.\n");
+            return 1;
+        }
+
+        ftruncate(fd, SIZE);
+        printf("Shared memory created.\n");
+    }
+
+    printf("Allocate shared memory.\n");
+    char *data = (char *)mmap(nullptr, SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    if (!data)
+    {
+        fprintf(stderr, "Unable to allocate shared memory.\n");
         return 1;
     }
+    
+    printf("Write message to shared memory.\n");
+    strcpy(data, message);
 
-    if (write(_pipe[Pipe::WRITE], str, strlen(str)) < 0) 
-    {
-        printf("Error in write()\n");
-        return 1;
-    }
-
-#define READ read(_pipe[Pipe::READ], buffer, sizeof(buffer) - 1)
-    for (int size = READ; size > 0; size = READ)
-    {
-        buffer[size] = 0;
-        printf("%s\n", buffer);
-    }
+    munmap(data, SIZE);
+    close(fd);
 
     return 0;
 }
