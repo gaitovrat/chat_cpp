@@ -12,9 +12,8 @@ all: prepare $(TARGETS)
 prepare:
 	mkdir -p build/bin
 
-# g++ $(CPPFLAGS) $(OBJECTS_SERVER) -o build/bin/$@ $(LDFLAGS)
 server: $(OBJECTS)
-	g++ $(CPPFLAGS) $(OBJECTS_SERVER) -o build/bin/$@
+	g++ $(CPPFLAGS) $(OBJECTS_SERVER) -o build/bin/$@ $(LDFLAGS)
 
 client: $(OBJECTS)
 	g++ $(CPPFLAGS) $(OBJECTS_CLIENT) -o build/bin/$@
