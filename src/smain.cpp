@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "Server.hpp"
+#include "Handle.hpp"
 
 int main(int argc, char const *argv[])
 {
@@ -17,6 +18,9 @@ int main(int argc, char const *argv[])
         fprintf(stderr, "Unable to parse port.\n");
         return 1;
     }
+
+    Chat::setHandler(SIGINT, Chat::handle);
+    Chat::setHandler(SIGPIPE, Chat::handle);
 
     Chat::Server server(port);
     server.bind();

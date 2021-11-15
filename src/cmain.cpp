@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "Client.hpp"
+#include "Handle.hpp"
 
 int main(int argc, char const *argv[])
 {
@@ -20,7 +21,12 @@ int main(int argc, char const *argv[])
         return 1;
     }
 
+    Chat::setHandler(SIGINT, Chat::handle);
+    Chat::setHandler(SIGPIPE, Chat::handle);
+
     Chat::Client client(port, address);
     client.connect();
     client.loop();
+
+    return 0;
 }
