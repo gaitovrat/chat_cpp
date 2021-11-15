@@ -1,13 +1,27 @@
-#include "SharedMemory.hpp"
-
 #include <stdio.h>
+#include <stdlib.h>
+
+#include "Server.hpp"
 
 int main(int argc, char const *argv[])
 {
-    Chat::SharedMemory shm("/shm1");
-    shm.open();
+    if (argc < 2)
+    {
+        fprintf(stderr, "Enter port number.\n");
+        return 1;
+    }
 
-    snprintf(shm.getData(), Chat::SharedMemory::DATA_SIZE, "Hello world!\n");
+    int port = atoi(argv[1]);
+    if (!port)
+    {
+        fprintf(stderr, "Unable to parse port.\n");
+        return 1;
+    }
+
+    Chat::Server server(port);
+    server.bind();
+    server.listen();
+    server.loop();
 
     return 0;
 }
