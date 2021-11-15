@@ -60,7 +60,7 @@ void Chat::Semaphore::up()
 
 void Chat::Semaphore::update()
 {
-    _value = sem_getvalue(_semaphore, &_value);
+    sem_getvalue(_semaphore, &_value);
 }
 
 int Chat::Semaphore::getValue()
