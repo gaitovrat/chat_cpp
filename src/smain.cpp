@@ -1,17 +1,13 @@
-#include "Semaphore.hpp"
+#include "SharedMemory.hpp"
 
 #include <stdio.h>
 
 int main(int argc, char const *argv[])
 {
-    Chat::Semaphore sem("/sem1");
-    sem.open();
+    Chat::SharedMemory shm("/shm1");
+    shm.open();
 
-    printf("%s = %d\n", __STRING(sem), sem.getValue());
-    sem.up();
-    printf("%s = %d\n", __STRING(sem), sem.getValue());
-    sem.down();
-    printf("%s = %d\n", __STRING(sem), sem.getValue());
+    snprintf(shm.getData(), Chat::SharedMemory::DATA_SIZE, "Hello world!\n");
 
     return 0;
 }
