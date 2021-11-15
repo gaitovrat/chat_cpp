@@ -3,6 +3,7 @@ SOURCES = $(wildcard src/*.cpp)
 OBJECTS = $(SOURCES:%.cpp=%.o)
 OBJECTS_CLIENT = build/cmain.o build/Client.o
 OBJECTS_SERVER = $(filter-out $(OBJECTS_CLIENT), $(OBJECTS:src/%.o=build/%.o))
+OBJECTS_CLIENT += build/Handle.o
 
 CPPFLAGS = -g -std=c++20 -pthread
 LDFLAGS = -lrt
