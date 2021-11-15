@@ -16,7 +16,7 @@ Chat::Semaphore::~Semaphore()
     }
 }
 
-void Chat::Semaphore::open(int flag = O_RDWR, uint value = 0, mode_t mode = 0660)
+void Chat::Semaphore::open(int flag = O_RDWR, uint value, mode_t mode)
 {
     _semaphore = sem_open(_name, flag);
     if (!opened())
