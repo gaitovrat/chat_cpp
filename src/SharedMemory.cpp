@@ -22,7 +22,7 @@ Chat::SharedMemory::~SharedMemory()
     }
 }
 
-void Chat::SharedMemory::open(int flag = O_RDWR, mode_t mode = 0660)
+void Chat::SharedMemory::open(int flag, mode_t mode)
 {
     _fd = shm_open(_name, flag, mode);
     if (_fd < 0)
