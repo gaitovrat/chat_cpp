@@ -18,7 +18,7 @@ server: $(OBJECTS)
 	g++ $(CPPFLAGS) $(OBJECTS_SERVER) -o build/bin/$@ $(LDFLAGS)
 
 client: $(OBJECTS)
-	g++ $(CPPFLAGS) $(OBJECTS_CLIENT) -o build/bin/$@
+	g++ $(CPPFLAGS) $(OBJECTS_CLIENT) -o build/bin/$@ $(LDFLAGS)
 
 %.o: %.cpp
 	g++ -c $(CPPFLAGS) -o $(@:src/%=build/%) $^
