@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-Chat::Client::Client(int port, const char *address) : _port(port)
+Chat::Client::Client(int port, const char *address)
 {
     _poll[0].fd = STDIN_FILENO;
     _poll[1].fd = -1;

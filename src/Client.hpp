@@ -9,7 +9,6 @@ namespace Chat
     class Client
     {
     private:
-        const int _port;
         sockaddr_in _address;
         int _socket;
         pollfd _poll[2];
