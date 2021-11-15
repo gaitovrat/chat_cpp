@@ -36,6 +36,8 @@ void Chat::SharedMemory::open(int flag, mode_t mode)
 
         ftruncate(_fd, Chat::SharedMemory::DATA_SIZE);
     }
+
+    _data = (char *)mmap(nullptr, Chat::SharedMemory::DATA_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, _fd, 0);
 }
 
 char *Chat::SharedMemory::getData()
