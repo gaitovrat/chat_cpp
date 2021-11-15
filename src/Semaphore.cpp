@@ -55,6 +55,7 @@ void Chat::Semaphore::down()
 void Chat::Semaphore::up()
 {
     sem_post(_semaphore);
+    update();
 }
 
 void Chat::Semaphore::update()
