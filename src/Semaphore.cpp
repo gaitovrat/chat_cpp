@@ -67,3 +67,10 @@ int Chat::Semaphore::getValue()
 {
     return _value;
 }
+
+int Chat::Semaphore::tryDown()
+{
+    return sem_trywait(_semaphore);
+}
+
+

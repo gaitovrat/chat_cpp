@@ -21,6 +21,7 @@ namespace Chat
         void down();
         void up();
         int getValue();
+        int tryDown();
 
     private:
         void update();

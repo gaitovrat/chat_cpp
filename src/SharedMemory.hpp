@@ -2,6 +2,7 @@
 #define _SHARED_MEMORY_HPP
 
 #include <fcntl.h>
+#include <sys/stat.h>
 
 namespace Chat
 {
